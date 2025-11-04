@@ -1,59 +1,49 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fountain Coach — Extending Presence</title>
-  <meta name="description" content="Fountain Coach builds technologies that extend presence across time." />
-  <style>
-    :root { --bg:#0b0d12; --fg:#e7e8ea; --muted:#a9b0b6; --accent:#6de0ff; }
-    html,body { margin:0; height:100%; background:var(--bg); color:var(--fg); font:16px/1.6 -apple-system, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
-    .wrap { max-width: 920px; margin: 0 auto; padding: 56px 24px 64px; }
-    header { margin: 32px 0 28px; }
-    h1 { font-size: clamp(28px, 4vw, 42px); letter-spacing: 0.2px; margin: 0 0 8px; }
-    p.lead { font-size: clamp(18px, 2.6vw, 22px); color: var(--muted); margin: 0 0 20px; }
-    .cta { display:inline-block; margin-top:18px; padding:10px 16px; border:1px solid #2a2f36; border-radius:10px; color:var(--fg); text-decoration:none; background: linear-gradient(180deg,#171b22,#0f1318); }
-    .cta:hover { border-color:#3a3f46; }
-    section { margin: 42px 0; }
-    h2 { font-size: 18px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin: 0 0 14px; }
-    .cards { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
-    .card { padding:14px; border:1px solid #21262d; border-radius:12px; background: #0e1116; }
-    .card h3 { margin: 0 0 6px; font-size: 18px; }
-    .card p { margin:0; color: var(--muted); }
-    a { color: var(--accent); text-decoration: none; }
-    footer { margin-top: 56px; color: var(--muted); font-size: 14px; }
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <header>
-      <h1>Fountain Coach</h1>
-      <p class="lead">Extending presence — technologies that hold space rather than fill it.</p>
-      <a class="cta" href="https://github.com/Fountain-Coach">View Organization on GitHub</a>
-    </header>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fountain Coach — Extending Presence</title>
+    <meta name="description" content="Fountain Coach builds technologies that extend presence across time." />
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Fountain Coach">
+    <meta property="og:url" content="https://fountain-coach.github.io/">
+    <meta property="og:image" content="/assets/img/social-1200x630.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/css/style.css?v=1" />
+  </head>
+  <body>
+    <main class="container">
+      <nav class="nav">
+        <a href="/" class="nav__home" aria-label="Home"></a>
+        <a href="https://github.com/Fountain-Coach" class="nav__link" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/Fountain-Coach/midi2" class="nav__link" target="_blank" rel="noopener">MIDI 2</a>
+        <a href="https://github.com/Fountain-Coach/FountainKit" class="nav__link" target="_blank" rel="noopener">FountainKit</a>
+      </nav>
 
-    <section>
-      <h2>Featured</h2>
-      <div class="cards">
-        <a class="card" href="https://github.com/Fountain-Coach/midi2">
-          <h3>MIDI 2</h3>
-          <p>Next‑gen music protocol tools and experiments.</p>
-        </a>
-        <a class="card" href="https://github.com/Fountain-Coach/FountainKit">
-          <h3>FountainKit</h3>
-          <p>Core libraries for the Fountain Coach stack.</p>
-        </a>
+      <header class="brand">
+        <div class="brand__image" role="img" aria-label="Fountain Coach branding"></div>
+        <h1 class="brand__title">Fountain Coach</h1>
+        <p class="brand__subtitle">Extending presence — technologies that hold space rather than fill it.</p>
+      </header>
+
+      <div class="page">
+        <div class="paper">
+          <div class="spread">
+            <h1>FountainAI — Foundational Statement</h1>
+            <p><strong>FountainAI</strong> is the infrastructural heart of the organization. It was created to extend presence — the felt continuity that allows transformation to unfold across time. It listens structurally and semantically, preserving threads of meaning between moments of reflection.</p>
+            <h2>Featured Repositories</h2>
+            <p>
+              • <a href="https://github.com/Fountain-Coach/midi2">MIDI 2</a><br>
+              • <a href="https://github.com/Fountain-Coach/FountainKit">FountainKit</a>
+            </p>
+          </div>
+          <footer class="paper__footer">
+            <p>© 2025 Fountain Coach</p>
+          </footer>
+        </div>
       </div>
-    </section>
-
-    <section>
-      <h2>Statement</h2>
-      <p>FountainAI is the infrastructural heart of the organization. It was created to extend presence — the felt continuity that allows transformation to unfold across time. It listens structurally and semantically, preserving threads of meaning between moments of reflection.</p>
-    </section>
-
-    <footer>
-      © 2025 Fountain Coach
-    </footer>
-  </div>
-</body>
+    </main>
+    <script defer src="/assets/js/mobile-tables.js"></script>
+  </body>
 </html>
