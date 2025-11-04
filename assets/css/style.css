@@ -14,13 +14,13 @@
 }
 
 :root {
-  --bg: #f7f7f5;
+  --bg: #f8f8f6;
   --ink: #1e1e1c;
-  --muted: #6b6b66;
-  --accent: #3b5d60; /* teal echoing header ring */
+  --muted: #6e6e68;
+  --accent: #2f6f73; /* Fountain Coach teal */
   --accent-2: #6aa0a3; /* lighter teal for subtle UI */
   --ink-soft: #2b2b28;
-  --maxw: 820px;
+  --maxw: 860px;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
@@ -29,10 +29,10 @@ body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helveti
 .nav { display: flex; gap: .9rem; margin: .25rem 0 1.25rem; align-items: center; }
 .nav__link { color: var(--accent); text-decoration: none; font-family: 'Source Sans 3', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; font-weight: 600; }
 .nav__link:hover { text-decoration: underline; }
-.nav__home { width: 36px; height: 36px; display: inline-block; border-radius: 50%; background: center/cover no-repeat url('../img/HEADER.png'); box-shadow: 0 0 0 3px rgba(59,93,96,.12); border: 1px solid #e4e3de; }
+.nav__home { width: 36px; height: 36px; display: inline-block; border-radius: 50%; background: center/cover no-repeat url('../img/logo.svg'); box-shadow: 0 0 0 3px rgba(59,93,96,.12); border: 1px solid #e4e3de; }
 .nav__home:hover { box-shadow: 0 0 0 4px rgba(59,93,96,.18); }
 .brand { text-align: center; margin: 1.5rem 0 2rem; }
-.brand__image { width: 128px; height: 128px; margin: 0 auto 1rem; border-radius: 50%; background: center/cover no-repeat url('../img/HEADER.png'); box-shadow: 0 0 0 6px rgba(59,93,96,.15); }
+.brand__image { width: 128px; height: 128px; margin: 0 auto 1rem; border-radius: 50%; background: center/cover no-repeat url('../img/logo.svg'); box-shadow: 0 0 0 6px rgba(59,93,96,.15); }
 .brand__title { font-weight: 600; letter-spacing: .005em; margin: 0 .5rem; font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
 .brand__subtitle { margin: .25rem 0 0; color: var(--muted); font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; font-size: .95rem; }
 
