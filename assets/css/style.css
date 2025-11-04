@@ -52,6 +52,9 @@ h3 { font-weight: 600; font-size: 1.02rem; color: #2a3637; text-transform: none;
 p { margin: 0 0 1rem; }
 /* add gentle reading rhythm similar to score pages */
 p + p { text-indent: 0; }
+/* Normalize mirrored README paragraphs: hide hard line breaks */
+.mirrored-readme br { display: none; }
+.mirrored-readme p { margin: 0 0 1rem; }
 @media (min-width: 760px) {
   p { hyphens: auto; }
 }
