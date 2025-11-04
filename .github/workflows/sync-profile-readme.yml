@@ -1,0 +1,63 @@
+name: Sync org profile README to site
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 * * * *'  # hourly at :17
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout site repo
+        uses: actions/checkout@v4
+
+      - name: Fetch org profile README.md
+        id: fetch
+        run: |
+          set -euo pipefail
+          curl -sL https://raw.githubusercontent.com/Fountain-Coach/.github/main/profile/README.md > /tmp/README.md
+          # strip site-local only lines
+          grep -vE '^(Visit: https://fountain-coach.github.io|Note on mirroring:|Maintenance:)' /tmp/README.md > /tmp/README.cleaned.md || true
+          echo "cleaned=/tmp/README.cleaned.md" >> $GITHUB_OUTPUT
+
+      - name: Render markdown to HTML via API
+        id: render
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          body=$(jq -Rs --arg mode gfm --arg ctx "Fountain-Coach/.github" '{text: ., mode: $mode, context: $ctx}' < "${{ steps.fetch.outputs.cleaned }}")
+          curl -s -H "Authorization: Bearer $GH_TOKEN" \
+               -H 'Content-Type: application/json' \
+               -X POST https://api.github.com/markdown \
+               -d "$body" > /tmp/readme.html
+          echo "html=/tmp/readme.html" >> $GITHUB_OUTPUT
+
+      - name: Inject HTML into index.html between markers
+        run: |
+          set -euo pipefail
+          start='<!-- BEGIN MIRROR: ORG_PROFILE_README -->'
+          end='<!-- END MIRROR: ORG_PROFILE_README -->'
+          esc_start=$(printf '%s\n' "$start" | sed -e 's/[\&/]/\\&/g')
+          esc_end=$(printf '%s\n' "$end" | sed -e 's/[\&/]/\\&/g')
+          content=$(sed -e 's/[&/]/\\&/g' -e 's/$/\\n/' "${{ steps.render.outputs.html }}" | tr -d '\n')
+          perl -0777 -pe "s/${esc_start}.*?${esc_end}/${start}\n${content}\n${end}/s" -i index.html
+          echo 'Preview of injected block:'
+          sed -n '/BEGIN MIRROR/,/END MIRROR/p' index.html | sed -n '1,40p'
+
+      - name: Commit and push if changed
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet; then
+            git add index.html
+            git commit -m "chore(site): sync org profile README [skip ci]"
+            git push
+          else
+            echo "No changes to commit."
+          fi
