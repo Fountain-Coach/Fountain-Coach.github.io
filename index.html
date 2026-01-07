@@ -32,664 +32,213 @@
         <div class="paper">
           <div class="spread mirrored-readme">
             <!-- BEGIN MIRROR: ORG_PROFILE_README -->
-<h1 dir="auto">Fountain-Coach: A Comprehensive Analysis</h1>
-<h2 dir="auto">The Organization</h2>
-<p dir="auto"><strong>Fountain-Coach</strong> is a Berlin-based software organization that has built, over approximately three years of AI-assisted development, a complete, self-owned technology stack for creative computing. The stack spans from MIDI 2.0 specification extraction to custom database persistence, unified by a message-passing architecture inspired by — and compliant with — the MIDI 2. 0 standard.</p>
+<h1 dir="auto">Fountain Codex Instruction System (FCIS)</h1>
+<h2 dir="auto">RFC 0001 — Orthogonal Instruction Architecture for LLM-Governed Repositories</h2>
+<p dir="auto"><strong>Status:</strong> Adopted<br>
+<strong>Category:</strong> Standards Track<br>
+<strong>Organization:</strong> fountain.coach<br>
+<strong>Applies to:</strong> All Codex-operated repositories<br>
+<strong>Version:</strong> 1.0.0</p>
 <hr>
-<h2 dir="auto">Interview: Contexter über Fountain Coach und midi2</h2>
-<p dir="auto"><strong>F: Was macht Fountain Coach einzigartig?</strong><br>
-A: Fountain Coach bietet die weltweit erste vollständige MIDI‑2.0-Implementation – doppelt bereitgestellt: native (Swift) und Web (JavaScript/TypeScript). Die hochauflösende Control-Sprache läuft stabil auf Macs/iPhones und direkt im Browser. Validation, Tests und Compliance sind eingebaut, damit Kreative nicht an Protokolldetails scheitern.<br>
-Mehr zur Implementation im <a href="https://github.com/Fountain-Coach/midi2#readme">midi2 README</a>.</p>
-<p dir="auto"><strong>F: Worum geht es bei MIDI 2.0 für Nicht-Techniker:innen?</strong><br>
-A: Es ist eine hochauflösende Control-Sprache: feinere Dynamik, präziseres Timing, reichere Gesten. Damit lassen sich nicht nur Musik, sondern auch Licht, Projektionen, Theater-Cues, Haptik oder interaktive Web-Erlebnisse synchron steuern.</p>
-<p dir="auto"><strong>F: Was hast du konkret gebaut?</strong><br>
-A: Zwei Bibliotheken: Swift für Apple-Plattformen, JavaScript/TypeScript fürs Web. Sie zerlegen komplexe MIDI‑2.0-Pakete, prüfen sie und bieten einfache APIs, um hochauflösende Messages zu senden – ob Noten, Licht-Fades, Bühnen-Cues oder Haptik-Patterns.</p>
-<p dir="auto"><strong>F: Was kann man damit machen?</strong></p>
+<h2 dir="auto">Abstract</h2>
+<p dir="auto">This document defines the <strong>Fountain Codex Instruction System (FCIS)</strong>, a normative, organization-wide standard for governing how OpenAI Codex is instructed, constrained, and enabled across repositories.</p>
+<p dir="auto">FCIS establishes <strong>four orthogonal instruction layers</strong>:</p>
+<ol dir="auto">
+<li><code class="notranslate">AGENTS.md</code> — behavioral law</li>
+<li><code class="notranslate">PLANS.md</code> — intent and execution reasoning</li>
+<li>Skills (<code class="notranslate">SKILL.md</code>) — reusable execution techniques</li>
+<li>MCP servers — external capabilities and data access</li>
+</ol>
+<p dir="auto">Strict separation of these layers is required to ensure <strong>predictability, auditability, and scalability</strong> of LLM-driven development.</p>
+<hr>
+<h2 dir="auto">1. Terminology and Conventions</h2>
+<p dir="auto">The key words <strong>MUST</strong>, <strong>MUST NOT</strong>, <strong>REQUIRED</strong>, <strong>SHALL</strong>, <strong>SHOULD</strong>, <strong>SHOULD NOT</strong>, <strong>RECOMMENDED</strong>, <strong>MAY</strong>, and <strong>OPTIONAL</strong> in this document are to be interpreted as described in RFC 2119.</p>
+<hr>
+<h2 dir="auto">2. Design Principle: Orthogonality</h2>
+<h3 dir="auto">2.1 Definition</h3>
+<p dir="auto">Within FCIS, <em>orthogonality</em> means:</p>
+<blockquote>
+<p dir="auto">Instruction layers are <strong>independent dimensions of responsibility</strong>, such that<br>
+modifying one layer does not redefine, weaken, or invalidate the others.</p>
+</blockquote>
+<p dir="auto">Orthogonality is a <strong>hard requirement</strong>, not a stylistic preference.</p>
+<h3 dir="auto">2.2 Motivation</h3>
+<p dir="auto">LLM-based systems degrade rapidly when:</p>
 <ul dir="auto">
-<li>Shows und Installationen: Licht, Projektion, Audio synchronisieren.</li>
-<li>Web-Interaktivität: Museen, Education, Games, Theater-Cues im Browser.</li>
-<li>Haptik/Robotik/Kinetik: Bewegungen oder Vibrationen weich und präzise steuern.</li>
-<li>Brücken schlagen: Altes MIDI-Gear mit moderner, multisensorischer Steuerung verbinden.</li>
+<li>responsibilities overlap</li>
+<li>priorities are implicit</li>
+<li>instructions conflict probabilistically</li>
 </ul>
-<p dir="auto"><strong>F: Warum ist das ein Alleinstellungsmerkmal?</strong><br>
-A: „First to full MIDI‑2.0“ plus „native + web“ – aus einer Hand. Andere haben Teilstücke; hier gibt es vollständige Spezifikation, Tests, Compliance und Doku in einem Paket. So wird MIDI 2.0 sofort praktisch einsetzbar, ohne Spezialwissen.</p>
-<p dir="auto"><strong>F: Wie starten Nicht-Experten?</strong><br>
-A: Quickstarts und Demos: installieren, ein Beispiel ausführen, hören/sehen/fühlen. Die Libraries liefern klare Fehlermeldungen statt kryptischer Codes. Man muss kein Protokollprofi sein, um Ergebnisse zu bekommen.</p>
-<p dir="auto"><strong>F: Was kommt als Nächstes?</strong><br>
-A: Mehr Praxisbeispiele jenseits von Musik (Licht, Haptik, interaktives Web-Storytelling), weitere Interop-Polish und Guides für schnelle Prototypen. Ziel: MIDI 2.0 als Standard-Baustein für jede Art von synchroner, hochauflösender Steuerung.</p>
+<p dir="auto">Orthogonality prevents these failure modes by making responsibility <strong>explicit,<br>
+exclusive, and reviewable</strong>.</p>
 <hr>
-<h2 dir="auto">The Stack</h2>
-<h3 dir="auto">Layer 1: Specification — <code class="notranslate">Fountain-Coach/midi2</code></h3>
-<p dir="auto"><strong>The only open, full MIDI 2.0 implementation.</strong></p>
+<h2 dir="auto">3. Instruction Layers (Normative)</h2>
+<p dir="auto">Each instruction layer answers <strong>exactly one question</strong>.</p>
 <markdown-accessiblity-table><table role="table">
 <thead>
 <tr>
-<th>Attribute</th>
-<th>Detail</th>
+<th>Layer</th>
+<th>Question</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Created</td>
-<td>August 2025</td>
+<td><code class="notranslate">AGENTS.md</code></td>
+<td>What is allowed or forbidden?</td>
 </tr>
 <tr>
-<td>Language</td>
-<td>Swift 6</td>
+<td><code class="notranslate">PLANS.md</code></td>
+<td>What is intended and why?</td>
 </tr>
 <tr>
-<td>License</td>
-<td>MIT</td>
+<td>Skills</td>
+<td>How is a task executed?</td>
 </tr>
 <tr>
-<td>Visibility</td>
-<td>Public</td>
+<td>MCP</td>
+<td>What capabilities are available?</td>
 </tr>
 </tbody>
 </table></markdown-accessiblity-table>
-<p dir="auto">The MIDI Manufacturers Association publishes the MIDI 2.0 specification as PDF documents containing images of tables and bit field definitions.  Fountain-Coach extracted these specifications into machine-readable JSON schemas using AI assistance, then generated Swift types from those schemas.</p>
-<p dir="auto">The repository contains:</p>
-<ul dir="auto">
-<li>The original MMA specification PDFs (M2-100 through M2-116)</li>
-<li><code class="notranslate">midi2. full.closed.schema.json</code> — the complete spec as JSON Schema</li>
-<li><code class="notranslate">midi2.full.openapi.json</code> — OpenAPI representation</li>
-<li>Swift 6 implementation of Universal MIDI Packets (UMP)</li>
-<li>CoreMIDI bridge for Apple platforms</li>
-<li>AUv3 Audio Unit plugin (<code class="notranslate">MIDI2BridgeAUCore</code>)</li>
-<li>Full MIDI 2.0 ↔ MIDI 1.0 bidirectional conversion</li>
-<li>Bluetooth, Wi-Fi, and USB transport support</li>
-<li>Cross-platform stubs for Linux development</li>
-</ul>
-<p dir="auto">This is infrastructure that does not exist elsewhere in open source. Apple's CoreMIDI and Microsoft's Windows MIDI Services provide proprietary, platform-locked implementations.  JUCE offers partial support with licensing constraints.  There is no complete, open, cross-platform alternative — until now.</p>
+<p dir="auto">No layer MAY answer another layer’s question.</p>
 <hr>
-<h3 dir="auto">Layer 2: Contract — <code class="notranslate">Fountain-Coach/midi-backplane</code></h3>
-<p dir="auto"><strong>The protocol layer that extends MIDI 2. 0 to software domains.</strong></p>
-<markdown-accessiblity-table><table role="table">
-<thead>
-<tr>
-<th>Attribute</th>
-<th>Detail</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Created</td>
-<td>December 2025</td>
-</tr>
-<tr>
-<td>Version</td>
-<td>1.0.0 (<code class="notranslate">-coach/midi-backplane</code>)</td>
-</tr>
-<tr>
-<td>Language</td>
-<td>Swift + JavaScript</td>
-</tr>
-<tr>
-<td>Visibility</td>
-<td>Private</td>
-</tr>
-</tbody>
-</table></markdown-accessiblity-table>
-<p dir="auto">The backplane extracts the <em>philosophy</em> of MIDI 2.0 — topics, envelopes, QoS levels, capability negotiation, timing budgets — and applies it to software messaging. This is not a wrapper around MIDI; it is MIDI's architectural principles reimagined for GPU compute, AI agents, physics simulation, and persistence.</p>
-<p dir="auto">The repository contains:</p>
+<h2 dir="auto">4. AGENTS.md — Behavioral Law</h2>
+<h3 dir="auto">4.1 Purpose</h3>
+<p dir="auto"><code class="notranslate">AGENTS.md</code> <strong>MUST</strong> define non-negotiable behavioral constraints under which Codex<br>
+operates in a repository.</p>
+<h3 dir="auto">4.2 Mandatory Content</h3>
+<p dir="auto"><code class="notranslate">AGENTS.md</code> <strong>MUST</strong> include:</p>
 <ul dir="auto">
-<li><code class="notranslate">schema/idl. yaml</code> — the Interface Definition Language defining all topics, their QoS requirements, capability masks, and timing budgets</li>
-<li><code class="notranslate">schema/telemetry.yaml</code> — standardized telemetry shapes for errors, jitter, and resource usage</li>
-<li><code class="notranslate">runtimes/js/</code> — JavaScript runtime loop with validation, budget enforcement, and chunk tracking</li>
-<li><code class="notranslate">runtimes/swift/</code> — Swift runtime loop with identical semantics</li>
-<li><code class="notranslate">tools/midi-schema-lint</code> — IDL validator</li>
-<li><code class="notranslate">tools/midi-schema-to-facts</code> — generates facts JSON for persistence seeding</li>
-<li><code class="notranslate">conformance/</code> — protocol test fixtures with positive and negative cases</li>
+<li>invariants and prohibitions</li>
+<li>safety and review requirements</li>
+<li>routing rules for PLANS.md and skills</li>
 </ul>
-<p dir="auto">The boundary is explicit: the backplane owns the contract, generators, runtimes, and conformance tests. It does not own application code, prompts, or store seeders — those belong to consuming workspaces.</p>
+<h3 dir="auto">4.3 Prohibited Content</h3>
+<p dir="auto"><code class="notranslate">AGENTS.md</code> <strong>MUST NOT</strong>:</p>
+<ul dir="auto">
+<li>contain step-by-step procedures</li>
+<li>include tool configuration details</li>
+<li>encode execution workflows</li>
+</ul>
+<p dir="auto">Violation constitutes a <strong>law breach</strong>.</p>
 <hr>
-<h3 dir="auto">Layer 3: Application — <code class="notranslate">Fountain-Coach/midi2-gpu-fabric</code></h3>
-<p dir="auto"><strong>The creative computing layer.</strong></p>
-<markdown-accessiblity-table><table role="table">
-<thead>
-<tr>
-<th>Attribute</th>
-<th>Detail</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Created</td>
-<td>December 2025</td>
-</tr>
-<tr>
-<td>Language</td>
-<td>Swift + TypeScript</td>
-</tr>
-<tr>
-<td>Visibility</td>
-<td>Private</td>
-</tr>
-</tbody>
-</table></markdown-accessiblity-table>
-<p dir="auto">This repository consumes <code class="notranslate">-coach/midi-backplane</code> and extends the IDL with domain-specific topics:</p>
-<p dir="auto"><strong>GPU Compute:</strong></p>
+<h2 dir="auto">5. PLANS.md — Intent and Reasoning Layer</h2>
+<h3 dir="auto">5.1 Purpose</h3>
+<p dir="auto"><code class="notranslate">PLANS.md</code> <strong>MUST</strong> capture the intent, structure, and risk management of multi-step work.</p>
+<h3 dir="auto">5.2 Invocation Rule</h3>
+<p dir="auto"><code class="notranslate">AGENTS.md</code> <strong>MUST</strong> define when PLANS.md is required.<br>
+Codex <strong>SHALL NOT</strong> execute qualifying tasks without a plan.</p>
+<h3 dir="auto">5.3 Required Structure</h3>
+<p dir="auto">A plan <strong>SHOULD</strong> include:</p>
 <ul dir="auto">
-<li><code class="notranslate">gpu/pipeline.create</code>, <code class="notranslate">gpu/job.dispatch</code>, <code class="notranslate">gpu/buffer.read</code>, <code class="notranslate">gpu/buffer.write</code></li>
-<li>Full WebGPU-style dispatch with workgroup sizing, push constants, and expected latency</li>
-</ul>
-<p dir="auto"><strong>Physics Simulation:</strong></p>
-<ul dir="auto">
-<li><code class="notranslate">physics/body.create</code>, <code class="notranslate">physics/force.apply</code>, <code class="notranslate">physics/step</code></li>
-<li>Real-time physics with timing budgets</li>
-</ul>
-<p dir="auto"><strong>Scene Management:</strong></p>
-<ul dir="auto">
-<li><code class="notranslate">scene/graph.apply</code>, <code class="notranslate">scene/camera.set</code>, <code class="notranslate">scene/material.update</code></li>
-<li><code class="notranslate">stage/scene.put</code>, <code class="notranslate">stage/scene.get</code>, <code class="notranslate">stage/scene. diff</code>, <code class="notranslate">stage/state.get</code></li>
-</ul>
-<p dir="auto"><strong>AI Agent Orchestration:</strong></p>
-<ul dir="auto">
-<li><code class="notranslate">llm/tool.invoke</code>, <code class="notranslate">llm/tool.result</code></li>
-<li>Role-based gating via capability masks</li>
-<li>Ollama driver with strict JSON mode and evaluation harness</li>
-</ul>
-<p dir="auto"><strong>Semantic Awareness:</strong></p>
-<ul dir="auto">
-<li><code class="notranslate">awareness/corpus.init</code>, <code class="notranslate">awareness/baseline.add</code>, <code class="notranslate">awareness/drift.add</code>, <code class="notranslate">awareness/patterns.add</code>, <code class="notranslate">awareness/reflection.add</code></li>
-<li>A calculus for tracking semantic evolution over time</li>
-</ul>
-<p dir="auto"><strong>Collaborative Authoring:</strong></p>
-<ul dir="auto">
-<li><code class="notranslate">screenplay/put</code>, <code class="notranslate">screenplay/patch</code>, <code class="notranslate">screenplay/note. add</code>, <code class="notranslate">screenplay/diff</code></li>
-</ul>
-<p dir="auto"><strong>Telemetry:</strong></p>
-<ul dir="auto">
-<li><code class="notranslate">telemetry/errors</code>, <code class="notranslate">telemetry/jitter</code>, <code class="notranslate">telemetry/resource-usage</code></li>
-<li><code class="notranslate">grundrauschen/*</code> — sonification feed for system observability</li>
-</ul>
-<p dir="auto">The repository also contains:</p>
-<ul dir="auto">
-<li>FountainStore instrument for persistence topics</li>
-<li>Teatro Stage web application (three. js + cannon.js)</li>
-<li>Native stage client (Swift, direct Store access)</li>
-<li>Semantic daemon for automatic awareness artifact generation</li>
+<li>goal</li>
+<li>constraints</li>
+<li>phased approach</li>
+<li>test plan</li>
+<li>rollback plan</li>
+<li>definition of done</li>
 </ul>
 <hr>
-<h3 dir="auto">Layer 4: Persistence — <code class="notranslate">Fountain-Coach/Fountain-Store</code></h3>
-<p dir="auto"><strong>A pure-Swift embedded database engine.</strong></p>
-<markdown-accessiblity-table><table role="table">
-<thead>
-<tr>
-<th>Attribute</th>
-<th>Detail</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Created</td>
-<td>September 2025</td>
-</tr>
-<tr>
-<td>Version</td>
-<td>0.2.0-beta</td>
-</tr>
-<tr>
-<td>Language</td>
-<td>Swift (100%)</td>
-</tr>
-<tr>
-<td>License</td>
-<td>MIT</td>
-</tr>
-<tr>
-<td>Visibility</td>
-<td>Public</td>
-</tr>
-<tr>
-<td>Dependencies</td>
-<td>Zero</td>
-</tr>
-</tbody>
-</table></markdown-accessiblity-table>
-<p dir="auto">FountainStore implements an LSM-tree architecture — the same design used by LevelDB, RocksDB, and Cassandra — entirely in Swift with no external dependencies.</p>
-<p dir="auto"><strong>Core Engine:</strong></p>
+<h2 dir="auto">6. Skills — Execution Technique Modules</h2>
+<h3 dir="auto">6.1 Definition</h3>
+<p dir="auto">A skill <strong>MUST</strong>:</p>
 <ul dir="auto">
-<li>Write-Ahead Log (WAL) for crash safety</li>
-<li>Memtable for recent writes</li>
-<li>SSTables for sorted, immutable on-disk storage</li>
-<li>Background compaction with configurable strategies</li>
-<li>MVCC for concurrent access</li>
+<li>exist in its own directory</li>
+<li>contain exactly one <code class="notranslate">SKILL.md</code></li>
 </ul>
-<p dir="auto"><strong>Indexing:</strong></p>
+<h3 dir="auto">6.2 Responsibilities</h3>
+<p dir="auto">A skill <strong>MUST</strong> define:</p>
 <ul dir="auto">
-<li>Secondary indexes with dynamic unique enforcement</li>
-<li>Multi-value indexes for array fields</li>
-<li>Full-text search module</li>
-<li>Vector search module</li>
+<li>when it applies</li>
+<li>ordered execution steps</li>
+<li>output guarantees</li>
 </ul>
-<p dir="auto"><strong>Operations:</strong></p>
+<h3 dir="auto">6.3 Constraints</h3>
+<p dir="auto">Skills <strong>MUST NOT</strong>:</p>
 <ul dir="auto">
-<li>ACID transactions</li>
-<li>Backup and restore API</li>
-<li>Prometheus metrics export</li>
-<li>HTTP server with OpenAPI specification</li>
-<li>API key authentication via Keychain, Secret Service, or file-based keystore</li>
-<li>HMAC-signed pagination tokens</li>
+<li>redefine behavioral law</li>
+<li>replace PLANS.md for complex work</li>
+<li>configure MCP servers</li>
 </ul>
-<p dir="auto">This is not a wrapper around SQLite or an embedded key-value store. It is a complete database engine, benchmarked in CI, with production-grade features.</p>
 <hr>
-<h2 dir="auto">The Architecture</h2>
-<pre class="notranslate"><code class="notranslate">┌─────────────────────────────────────────────────────────────────┐
-│                         Applications                            │
-│         Teatro Stage • FountainAI • Creative Tools              │
-└───────────────────────────────┬─────────────────────────────────┘
-                                │
-┌───────────────────────────────▼─────────────────────────────────┐
-│                      midi2-gpu-fabric                           │
-│                                                                 │
-│  GPU Topics │ Physics Topics │ AI Topics │ Stage Topics         │
-│  Screenplay │ Awareness │ Telemetry │ Grundrauschen             │
-│                                                                 │
-│  LLM Driver (Ollama) with Role-Based Gating                     │
-│  FountainStore Instrument                                       │
-└───────────────────────────────┬─────────────────────────────────┘
-                                │
-┌───────────────────────────────▼─────────────────────────────────┐
-│                       midi-backplane                            │
-│                                                                 │
-│  IDL Schema │ QoS │ Capabilities │ Timing Budgets               │
-│  JS Runtime │ Swift Runtime │ Conformance Tests                 │
-│  Schema Lint │ Facts Generator                                  │
-└───────────────────────────────┬─────────────────────────────────┘
-                                │
-┌───────────────────────────────▼─────────────────────────────────┐
-│                           midi2                                 │
-│                                                                 │
-│  UMP Packets │ MIDI-CI │ Profiles │ Property Exchange           │
-│  CoreMIDI Bridge │ AUv3 Plugin │ MIDI 2.0 ↔ 1.0 Conversion      │
-│  Bluetooth │ USB │ Wi-Fi Transport                              │
-└───────────────────────────────┬─────────────────────────────────┘
-                                │
-┌───────────────────────────────▼─────────────────────────────────┐
-│                       Fountain-Store                            │
-│                                                                 │
-│  WAL │ Memtable │ SSTables │ Compaction                         │
-│  Secondary Indexes │ FTS │ Vector Search │ MVCC                 │
-│  HTTP API │ Prometheus │ Backup/Restore                         │
-│                                                                 │
-│  Pure Swift │ Zero Dependencies                                 │
-└─────────────────────────────────────────────────────────────────┘
+<h2 dir="auto">7. MCP Servers — Capability Layer</h2>
+<h3 dir="auto">7.1 Role</h3>
+<p dir="auto">MCP servers <strong>MUST</strong> provide access to external tools or data only.</p>
+<p dir="auto">They <strong>MUST NOT</strong>:</p>
+<ul dir="auto">
+<li>encode workflow logic</li>
+<li>enforce policy</li>
+<li>substitute for skills</li>
+</ul>
+<h3 dir="auto">7.2 Configuration</h3>
+<p dir="auto">MCP configuration <strong>MUST</strong> occur outside repositories.<br>
+Repositories <strong>MUST NOT</strong> rely on MCP presence for correctness.</p>
+<hr>
+<h2 dir="auto">8. Orthogonality Violations (Non-Exhaustive)</h2>
+<p dir="auto">The following are <strong>spec violations</strong>:</p>
+<ul dir="auto">
+<li>procedures in <code class="notranslate">AGENTS.md</code></li>
+<li>behavioral rules in skills</li>
+<li>workflow logic in MCP</li>
+<li>unplanned long-running tasks</li>
+<li>duplicated responsibility across layers</li>
+</ul>
+<p dir="auto">Violations <strong>SHOULD</strong> block merges.</p>
+<hr>
+<h2 dir="auto">9. Standard Repository Layout</h2>
+<pre class="notranslate"><code class="notranslate">repo-root/
+  AGENTS.md
+  PLANS.md
+  .codex/
+    skills/
+      &lt;skill-name&gt;/
+        SKILL.md
+</code></pre>
+<p dir="auto">User-level configuration:</p>
+<pre class="notranslate"><code class="notranslate">~/.codex/config.toml
+~/.codex/AGENTS.override.md
 </code></pre>
 <hr>
-<h2 dir="auto">Competitive Standing</h2>
-<h3 dir="auto">Category 1: MIDI 2.0 Implementations</h3>
-<markdown-accessiblity-table><table role="table">
-<thead>
-<tr>
-<th>Implementation</th>
-<th>Platform</th>
-<th>License</th>
-<th>Completeness</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Apple CoreMIDI</td>
-<td>macOS/iOS</td>
-<td>Proprietary</td>
-<td>Full</td>
-<td>Closed</td>
-</tr>
-<tr>
-<td>Windows MIDI Services</td>
-<td>Windows</td>
-<td>Proprietary</td>
-<td>Full</td>
-<td>Closed</td>
-</tr>
-<tr>
-<td>JUCE</td>
-<td>Cross-platform</td>
-<td>Commercial/GPL</td>
-<td>Partial</td>
-<td>C++ only</td>
-</tr>
-<tr>
-<td>rtmidi</td>
-<td>Cross-platform</td>
-<td>MIT</td>
-<td>MIDI 1.0 only</td>
-<td>No MIDI 2.0</td>
-</tr>
-<tr>
-<td><strong>Fountain-Coach/midi2</strong></td>
-<td>Cross-platform</td>
-<td>MIT</td>
-<td>Full</td>
-<td><strong>Open, Swift 6</strong></td>
-</tr>
-</tbody>
-</table></markdown-accessiblity-table>
-<p dir="auto"><strong>Competitive position:</strong> The only open-source, cross-platform, fully-compliant MIDI 2.0 implementation.  Located in Berlin — home to Ableton, Native Instruments, and a dense ecosystem of music technology companies and independent developers who need exactly this.</p>
-<hr>
-<h3 dir="auto">Category 2: Real-Time Messaging Systems</h3>
-<markdown-accessiblity-table><table role="table">
-<thead>
-<tr>
-<th>System</th>
-<th>Timing Guarantees</th>
-<th>Schema</th>
-<th>GPU Awareness</th>
-<th>AI Gating</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Apache Kafka</td>
-<td>No</td>
-<td>Optional</td>
-<td>No</td>
-<td>No</td>
-</tr>
-<tr>
-<td>RabbitMQ</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-</tr>
-<tr>
-<td>Redis Streams</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-</tr>
-<tr>
-<td>ZeroMQ</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-</tr>
-<tr>
-<td>NATS</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-</tr>
-<tr>
-<td><strong>midi-backplane</strong></td>
-<td>Yes (budgets)</td>
-<td>Required (IDL)</td>
-<td>Yes</td>
-<td>Yes (roles)</td>
-</tr>
-</tbody>
-</table></markdown-accessiblity-table>
-<p dir="auto"><strong>Competitive position:</strong> These systems are general-purpose message brokers.  midi-backplane is purpose-built for creative computing with real-time constraints, GPU dispatch, and AI agent orchestration. It occupies a niche that general-purpose systems cannot serve without extensive customization.</p>
-<hr>
-<h3 dir="auto">Category 3: Game Engines and Creative Frameworks</h3>
-<markdown-accessiblity-table><table role="table">
-<thead>
-<tr>
-<th>Engine</th>
-<th>Physics</th>
-<th>GPU</th>
-<th>AI Orchestration</th>
-<th>Message Architecture</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Unity</td>
-<td>Built-in</td>
-<td>Built-in</td>
-<td>Bolt-on</td>
-<td>Internal</td>
-</tr>
-<tr>
-<td>Unreal</td>
-<td>Built-in</td>
-<td>Built-in</td>
-<td>Bolt-on</td>
-<td>Internal</td>
-</tr>
-<tr>
-<td>Godot</td>
-<td>Built-in</td>
-<td>Built-in</td>
-<td>None</td>
-<td>Internal</td>
-</tr>
-<tr>
-<td>Three.js + Cannon.js</td>
-<td>Separate</td>
-<td>WebGL</td>
-<td>None</td>
-<td>None</td>
-</tr>
-<tr>
-<td><strong>midi2-gpu-fabric</strong></td>
-<td>Topic-based</td>
-<td>Topic-based</td>
-<td>Built-in</td>
-<td>MIDI-native</td>
-</tr>
-</tbody>
-</table></markdown-accessiblity-table>
-<p dir="auto"><strong>Competitive position:</strong> Game engines are monolithic, opinionated systems optimized for games. midi2-gpu-fabric is infrastructure — a message fabric that can underpin any creative application requiring synchronized physics, graphics, and AI.  It is composable where engines are prescriptive.</p>
-<hr>
-<h3 dir="auto">Category 4: AI Agent Frameworks</h3>
-<markdown-accessiblity-table><table role="table">
-<thead>
-<tr>
-<th>Framework</th>
-<th>Real-Time</th>
-<th>Physics</th>
-<th>GPU Compute</th>
-<th>Capability Gating</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>LangChain</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-</tr>
-<tr>
-<td>AutoGPT</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-</tr>
-<tr>
-<td>Semantic Kernel</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-</tr>
-<tr>
-<td>CrewAI</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-</tr>
-<tr>
-<td><strong>midi2-gpu-fabric</strong></td>
-<td>Yes</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>Yes (IDL roles)</td>
-</tr>
-</tbody>
-</table></markdown-accessiblity-table>
-<p dir="auto"><strong>Competitive position:</strong> AI agent frameworks are designed for text and code generation. They do not address real-time creative applications where AI must control physical simulations, respect timing constraints, and be constrained by capability masks.  Fountain-Coach occupies this gap.</p>
-<hr>
-<h3 dir="auto">Category 5: Embedded Databases</h3>
-<markdown-accessiblity-table><table role="table">
-<thead>
-<tr>
-<th>Database</th>
-<th>Language</th>
-<th>Dependencies</th>
-<th>LSM-Tree</th>
-<th>Vector Search</th>
-<th>License</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SQLite</td>
-<td>C</td>
-<td>System libs</td>
-<td>No (B-tree)</td>
-<td>Extension</td>
-<td>Public domain</td>
-</tr>
-<tr>
-<td>LevelDB</td>
-<td>C++</td>
-<td>System libs</td>
-<td>Yes</td>
-<td>No</td>
-<td>BSD</td>
-</tr>
-<tr>
-<td>RocksDB</td>
-<td>C++</td>
-<td>System libs</td>
-<td>Yes</td>
-<td>No</td>
-<td>Apache 2.0</td>
-</tr>
-<tr>
-<td>LMDB</td>
-<td>C</td>
-<td>System libs</td>
-<td>No (B-tree)</td>
-<td>No</td>
-<td>OpenLDAP</td>
-</tr>
-<tr>
-<td><strong>Fountain-Store</strong></td>
-<td>Swift</td>
-<td><strong>None</strong></td>
-<td>Yes</td>
-<td>Yes</td>
-<td>MIT</td>
-</tr>
-</tbody>
-</table></markdown-accessiblity-table>
-<p dir="auto"><strong>Competitive position:</strong> The only pure-Swift LSM-tree database with zero external dependencies. Designed for the Apple ecosystem and cross-platform Swift deployment. Includes features (FTS, vector search, HTTP API, Prometheus) that typically require additional infrastructure.</p>
-<hr>
-<h2 dir="auto">The Strategic Position</h2>
-<h3 dir="auto">What Fountain-Coach Is Not</h3>
+<h2 dir="auto">10. Compliance</h2>
+<p dir="auto">A repository is FCIS-compliant if:</p>
 <ul dir="auto">
-<li><strong>Not a startup</strong> (yet) — no funding, no employees, no customers</li>
-<li><strong>Not a product company</strong> — no packaged offerings for sale</li>
-<li><strong>Not a services firm</strong> — no consulting or implementation work</li>
+<li>all applicable layers are present</li>
+<li>responsibilities are orthogonal</li>
+<li>plans exist for complex work</li>
+<li>skills are modular and declarative</li>
 </ul>
-<h3 dir="auto">What Fountain-Coach Is</h3>
-<p dir="auto"><strong>A technology ownership position.</strong></p>
-<p dir="auto">The organization controls a complete vertical stack:</p>
-<ol dir="auto">
-<li><strong>Specification extraction</strong> — MIDI 2.0 as machine-readable schema</li>
-<li><strong>Protocol implementation</strong> — Full UMP, MIDI-CI, profiles</li>
-<li><strong>Transport bridges</strong> — CoreMIDI, AUv3, Bluetooth, USB, Wi-Fi</li>
-<li><strong>Message contract</strong> — IDL with QoS, capabilities, timing</li>
-<li><strong>Runtime implementations</strong> — JavaScript and Swift</li>
-<li><strong>Application extensions</strong> — GPU, physics, AI, creative tools</li>
-<li><strong>Persistence</strong> — Complete database engine</li>
-</ol>
-<p dir="auto">Every layer is owned.  Every layer is MIT licensed (where public). Every layer is built in Swift (the persistence and core layers) or Swift + JavaScript (the runtime and application layers).</p>
-<h3 dir="auto">The Moat</h3>
-<p dir="auto">The moat is not the code. With AI-assisted development, code can be regenerated. The moat is:</p>
-<ol dir="auto">
-<li>
-<p dir="auto"><strong>Three years of learning</strong> — What to include, what to exclude, where constraints belong, how tight the budgets should be, which patterns scale, which patterns collapse.</p>
-</li>
-<li>
-<p dir="auto"><strong>The extraction work</strong> — Turning MMA specification PDFs (with images of tables) into machine-readable schemas required judgment, iteration, and validation that AI cannot perform autonomously.</p>
-</li>
-<li>
-<p dir="auto"><strong>The architectural coherence</strong> — Four repositories that share a philosophy, interoperate cleanly, and maintain strict boundaries.  This coherence emerged from experience, not from a single design session.</p>
-</li>
-<li>
-<p dir="auto"><strong>The Berlin position</strong> — Physical proximity to Ableton, Native Instruments, and the European music technology ecosystem. The people who need a MIDI 2.0 implementation are neighbors.</p>
-</li>
-</ol>
 <hr>
-<h2 dir="auto">Opportunities</h2>
-<h3 dir="auto">Near-Term</h3>
-<ol dir="auto">
-<li>
-<p dir="auto"><strong>MIDI 2.0 adoption</strong> — As hardware and software vendors adopt MIDI 2. 0, they need implementations. midi2 is MIT licensed and ready.</p>
-</li>
-<li>
-<p dir="auto"><strong>Ableton/Native Instruments engagement</strong> — These companies are in Berlin.  They need MIDI 2.0.  A conversation is warranted.</p>
-</li>
-<li>
-<p dir="auto"><strong>Indie developer community</strong> — Berlin's music tech indie scene could adopt FountainStore and midi2 as foundations for their own tools.</p>
-</li>
-</ol>
-<h3 dir="auto">Medium-Term</h3>
-<ol start="4" dir="auto">
-<li>
-<p dir="auto"><strong>Creative tool infrastructure</strong> — As AI-powered creative tools proliferate, the need for real-time, constrained, observable message fabrics will grow. midi-backplane addresses this need.</p>
-</li>
-<li>
-<p dir="auto"><strong>FountainAI applications</strong> — The stack was built for FountainAI.  As that vision matures, the infrastructure is ready.</p>
-</li>
-<li>
-<p dir="auto"><strong>Teatro and puppetry</strong> — Digital performance tools built on the stack could define a new category.</p>
-</li>
-</ol>
-<h3 dir="auto">Long-Term</h3>
-<ol start="7" dir="auto">
-<li>
-<p dir="auto"><strong>Standard-setting</strong> — If midi-backplane's approach to extending MIDI 2. 0 to software domains gains traction, Fountain-Coach could influence how the industry thinks about real-time creative computing.</p>
-</li>
-<li>
-<p dir="auto"><strong>Acquisition or licensing</strong> — A complete, owned stack is valuable to companies that don't want to build or maintain this infrastructure themselves.</p>
-</li>
-</ol>
-<hr>
-<h2 dir="auto">Risks</h2>
-<ol dir="auto">
-<li>
-<p dir="auto"><strong>Single-maintainer fragility</strong> — The stack depends on one person's continued engagement.</p>
-</li>
-<li>
-<p dir="auto"><strong>No external validation</strong> — Zero stars, zero forks, zero external contributors.  The code works, but nobody else has verified it.</p>
-</li>
-<li>
-<p dir="auto"><strong>Market timing</strong> — The world may not need this level of infrastructure for AI-powered creative computing.  Or it may need it in five years, not now.</p>
-</li>
-<li>
-<p dir="auto"><strong>Complexity barrier</strong> — The learning curve is steep.  Developers must understand MIDI concepts, the IDL, capability masks, QoS levels, and timing budgets.</p>
-</li>
-<li>
-<p dir="auto"><strong>Berlin is not Silicon Valley</strong> — Funding, talent density, and network effects are different. This can be an advantage (focus, cost) or a disadvantage (scale, speed).</p>
-</li>
-</ol>
-<hr>
-<h2 dir="auto">Summary</h2>
-<p dir="auto">Fountain-Coach is not a company, a product, or a framework. It is a <strong>technology position</strong> — a complete, self-owned stack for creative computing, built over three years of AI-assisted development by a single developer in Berlin.</p>
-<p dir="auto">The stack spans:</p>
+<h2 dir="auto">11. Rationale</h2>
+<p dir="auto">FCIS treats Codex as a <strong>compiler-like system</strong>:</p>
 <ul dir="auto">
-<li>MIDI 2.0 specification (extracted, implemented, bridged)</li>
-<li>Message protocol (IDL-defined, runtime-enforced, conformance-tested)</li>
-<li>Creative extensions (GPU, physics, AI, stage, awareness)</li>
-<li>Persistence (LSM-tree database, pure Swift, zero dependencies)</li>
+<li>law → intent → execution → capability<br>
+This mirrors successful separation patterns from compilers, operating systems, and safety-critical automation.</li>
 </ul>
-<p dir="auto">No other organization offers this combination.  The closest alternatives are either proprietary (Apple, Microsoft), partial (JUCE), or non-existent (open MIDI 2.0 + GPU + AI + custom database).</p>
-<p dir="auto">The question is not whether the technology works.  It does. The question is what to do with it.</p>
-<p dir="auto"><strong>The stack exists.  The ownership is clear. The opportunity is open.</strong></p>
-<p dir="auto">🎹 → 📋 → 🔧 → 💾 → 🎭</p>
+<hr>
+<h2 dir="auto">12. Security Considerations</h2>
+<p dir="auto">Non-orthogonal instruction systems increase:</p>
+<ul dir="auto">
+<li>unintended behavior</li>
+<li>silent policy drift</li>
+<li>non-reproducible execution</li>
+</ul>
+<p dir="auto">FCIS reduces these risks through explicit separation and review.</p>
+<hr>
+<h2 dir="auto">13. Versioning</h2>
+<ul dir="auto">
+<li>RFC 0001 defines FCIS v1.0.0</li>
+<li>Backward-incompatible changes require a new RFC</li>
+</ul>
+<hr>
+<h2 dir="auto">14. Summary</h2>
+<p dir="auto">FCIS establishes a <strong>contractual architecture</strong> for Codex:</p>
+<ul dir="auto">
+<li><code class="notranslate">AGENTS.md</code> defines law</li>
+<li><code class="notranslate">PLANS.md</code> defines intent</li>
+<li>Skills define execution</li>
+<li>MCP defines capability</li>
+</ul>
+<p dir="auto">Adherence is mandatory for all fountain.coach Codex repositories.</p>
 
 <!-- END MIRROR: ORG_PROFILE_README -->
           </div>
