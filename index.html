@@ -37,16 +37,16 @@
         <div class="paper">
           <div class="spread mirrored-readme">
             <!-- BEGIN MIRROR: ORG_PROFILE_README -->
-<h1 dir="auto">Fountain Codex Instruction System (FCIS)</h1>
+<h1 dir="auto">Fountain Coach Instruction System (FCIS)</h1>
 <h2 dir="auto">RFC 0001 — Orthogonal Instruction Architecture for LLM-Governed Repositories</h2>
 <p dir="auto"><strong>Status:</strong> Adopted<br>
 <strong>Category:</strong> Standards Track<br>
 <strong>Organization:</strong> fountain.coach<br>
 <strong>Applies to:</strong> All Codex-operated repositories<br>
-<strong>Version:</strong> 1.0.0</p>
+<strong>Version:</strong> 1.4.0</p>
 <hr>
 <h2 dir="auto">Abstract</h2>
-<p dir="auto">This document defines the <strong>Fountain Codex Instruction System (FCIS)</strong>, a normative, organization-wide standard for governing how OpenAI Codex is instructed, constrained, and enabled across repositories.</p>
+<p dir="auto">This document defines the <strong>Fountain Coach Instruction System (FCIS)</strong>, a normative, organization-wide standard for governing how OpenAI Codex is instructed, constrained, and enabled across repositories.</p>
 <p dir="auto">FCIS establishes <strong>four orthogonal instruction layers</strong>:</p>
 <ol dir="auto">
 <li><code class="notranslate">AGENTS.md</code> — behavioral law</li>
@@ -55,15 +55,22 @@
 <li>MCP servers — external capabilities and data access</li>
 </ol>
 <p dir="auto">Strict separation of these layers is required to ensure <strong>predictability, auditability, and scalability</strong> of LLM-driven development.</p>
+<p dir="auto"><strong>Name and ownership:</strong> FCIS expands to <strong>Fountain Coach Instruction System</strong>. The name identifies the Fountain Coach standard, not a particular execution tool. References to OpenAI Codex elsewhere in this RFC describe its supported execution context and are not part of the FCIS expansion. This clarification does not modify the adopted instruction layers or the standard's scope. See <a href="../docs/FCIS-Name-and-Identity.md">FCIS Name and Identity</a>.</p>
 <hr>
 <h2 dir="auto">Compliance &amp; Policies</h2>
 <ul dir="auto">
 <li>FCIS Apple Intelligence Compliance Specification (Preflight): <a href="../docs/FCIS-AIC-Preflight-RFC.md">FCIS-AIC-Preflight-RFC</a></li>
+<li>FCIS Accessibility Standard: <a href="../docs/FCIS-AX-Standard.md">FCIS-AX-Standard</a></li>
 <li>FCIS Visual Regression Testing Standard: <a href="../docs/FCIS-VRT-Standard.md">FCIS-VRT-Standard</a></li>
 <li>Security policy: <a href="../.github/SECURITY.md">SECURITY</a></li>
+<li>Publication and source policy: <a href="../docs/FCIS-Publication-and-Source-Policy.md">FCIS Publication and Source Policy</a></li>
 <li>Governance: <a href="../.github/GOVERNANCE.md">GOVERNANCE</a></li>
 <li>Contributing: <a href="../.github/CONTRIBUTING.md">CONTRIBUTING</a></li>
 <li>Code of Conduct: <a href="../.github/CODE_OF_CONDUCT.md">CODE_OF_CONDUCT</a></li>
+</ul>
+<h3 dir="auto">Adopted external interoperability standards</h3>
+<ul dir="auto">
+<li><strong>OPDS Catalog 2.0 — adopted for digital publication catalog interoperability.</strong> <a href="../docs/adopted-external-standards/OPDS-2.0.md">Fountain Coach adoption and local publication profile</a> · <a href="https://specs.opds.io/opds-2.0" rel="nofollow">upstream specification</a>. OPDS is maintained by the upstream community; Fountain Coach owns only its adoption policy and its implementation in Fountain Press. This adoption is alongside, not under, the four FCIS instruction layers. It does not change RFC 0001 or the FCIS suite version.</li>
 </ul>
 <hr>
 <h2 dir="auto">1. Terminology and Conventions</h2>
@@ -188,6 +195,38 @@ Codex <strong>SHALL NOT</strong> execute qualifying tasks without a plan.</p>
 <h3 dir="auto">7.2 Configuration</h3>
 <p dir="auto">MCP configuration <strong>MUST</strong> occur outside repositories.<br>
 Repositories <strong>MUST NOT</strong> rely on MCP presence for correctness.</p>
+<h3 dir="auto">7.3 Provider-Independent Capability Access (FCIS-MCP-2)</h3>
+<p dir="auto">A capability and the reasoning provider that may choose to use it are separate authorities. A fully specified, admitted<br>
+computer, filesystem, process, service, or MCP operation <strong>MAY</strong> be invoked without an LLM session when its own<br>
+executable contract does not require inference. A tool provider's access or payment terms do not constitute an<br>
+LLM provider's model entitlement.</p>
+<ul dir="auto">
+<li><strong>Independent availability:</strong> Implementations <strong>MUST</strong> distinguish tool reachability, authorization, execution<br>
+admission, and terminal evidence from model availability, credentials, usage quotas, and billing. A model quota<br>
+refusal <strong>MUST NOT</strong> be presented as evidence that an independently reachable tool is unavailable.</li>
+<li><strong>No artificial paid dependency:</strong> An FCIS consumer <strong>MUST NOT</strong> require an OpenAI, Codex, or other paid reasoning<br>
+session solely to invoke an already admitted, fully specified external operation when a provider-independent<br>
+execution path is available. It <strong>MUST NOT</strong> substitute an unapproved chargeable reasoning call for a deterministic<br>
+tool operation. This rule does not manufacture a direct path where none has been implemented and proven.</li>
+<li><strong>Reasoning is a separate operation:</strong> If the request needs interpretation, argument synthesis, or agentic tool<br>
+selection, the actual reasoning lane <strong>MUST</strong> be admitted and elected under the existing provider, consent, cost,<br>
+and budget contract. The absence of a usable reasoning lane <strong>MUST</strong> yield a truthful, typed refusal; it<br>
+<strong>MUST NOT</strong> silently cause paid fallback or invented command arguments.</li>
+<li><strong>Existing execution authority remains binding:</strong> An MCP connection or tool advertisement is discovery, not<br>
+permission, execution admission, or success. For FCIS-KIT capabilities the owning kit <strong>MUST</strong> enforce<br>
+FCIS-KIT-14/15 mechanical constraints, scoped authorization, lifecycle, refusal, and terminal evidence. An MCP<br>
+client, host adapter, or model <strong>MUST NOT</strong> become a parallel executor or bypass the owning kit. MCP servers<br>
+still enforce their own transport security and service-side access controls; this does not transfer FCIS<br>
+execution policy to the server.</li>
+<li><strong>Cost truth:</strong> Costs, quotas, and entitlements for the tool service and the model service <strong>MUST</strong> be<br>
+represented separately, to the extent known. Unlimited or prepaid tool calls <strong>MUST NOT</strong> be described as<br>
+unlimited model inference. Unknown pricing or runtime availability <strong>MUST</strong> remain unknown rather than<br>
+presented as free, unlimited, or admitted.</li>
+</ul>
+<p dir="auto">This is an additive clarification of the existing MCP capability layer, not a fifth FCIS layer, a mandatory MCP<br>
+dependency, a new agent runtime, or permission to bypass existing owner-controlled operations. A consumer<br>
+<strong>MUST NOT</strong> claim provider-free execution merely because a server is configured: it needs an accepted tool call<br>
+and the required independent outcome evidence.</p>
 <hr>
 <h2 dir="auto">8. Orthogonality Violations (Non-Exhaustive)</h2>
 <p dir="auto">The following are <strong>spec violations</strong>:</p>
@@ -238,11 +277,36 @@ This mirrors successful separation patterns from compilers, operating systems, a
 <li>non-reproducible execution</li>
 </ul>
 <p dir="auto">FCIS reduces these risks through explicit separation and review.</p>
+<h2 dir="auto">12.1 FCIS-KIT Instrument Store</h2>
+<p dir="auto">FCIS-KIT extends the FCIS architecture from repository governance to governed capability distribution. An instrument<br>
+is a bounded capability that presents a typed MIDI2 surface, declares its permissions and execution lane, reports its<br>
+lifecycle, and carries the evidence needed for admission. Reframe remains the host authority; Codex may help build or<br>
+compose an instrument, but it does not decide admission or release.</p>
+<p dir="auto">The FCIS-KIT standard's <a href="../docs/FCIS-KIT-Standard.md#fcis-kit-14-mechanical-constraints">FCIS-KIT-14 mechanical constraint</a><br>
+is the binding form of that boundary: a typed executable predicate, named evaluator, bounded refusal state, and<br>
+terminal evidence requirement. It prevents an agent or runtime path from inventing or bypassing authority by ceremony.</p>
+<p dir="auto">The current milestone is the governed architecture and capability-plane contract. It is not a claim that a public<br>
+instrument marketplace, every proposed instrument, or every local/remote runtime already exists.</p>
+<p dir="auto">Read the detailed authority: <a href="https://governance.fountain.coach/chapters/91-fcis-kit-instrument-store-is-the-capability-plane/" rel="nofollow">Chapter 91 — The FCIS-KIT Instrument Store Is the Capability Plane</a>.<br>
+Read the repository declaration that materializes this relation: <a href="https://github.com/Fountain-Coach/midi2-gpu-fabric/blob/main/FCIS_KIT_DECLARATION.md">FCIS_KIT_DECLARATION.md</a>.</p>
+<p dir="auto">The organisation RFC above remains the normative FCIS layer model: <code class="notranslate">AGENTS.md</code> defines law, <code class="notranslate">PLANS.md</code> defines intent,<br>
+Skills define execution technique, and MCP provides capabilities. Chapter 91 applies that separation to instrument<br>
+construction and admission; it does not create a fifth instruction layer.</p>
 <hr>
 <h2 dir="auto">13. Versioning</h2>
+<p dir="auto">FCIS uses semantic versioning for the standards suite. RFC 0001 defines the FCIS <strong>architecture</strong> (the four orthogonal layers); the suite version tracks the normative standards adopted on top of it.</p>
 <ul dir="auto">
-<li>RFC 0001 defines FCIS v1.0.0</li>
-<li>Backward-incompatible changes require a new RFC</li>
+<li><strong>MINOR</strong> bump: a new additive standards-track document is adopted; the architecture and existing requirements are unchanged.</li>
+<li><strong>MAJOR</strong> bump (<strong>new RFC</strong>): any backward-incompatible change to the FCIS architecture — the four-layer contract — requires a new RFC.</li>
+</ul>
+<h3 dir="auto">Version history</h3>
+<ul dir="auto">
+<li><strong>v1.4.0</strong> — Adds <strong>FCIS-MCP-2 Provider-Independent Capability Access</strong>: separately admitted deterministic tools may be invoked without compulsory model turns, while reasoning, authorization, cost, and FCIS-KIT execution authority remain independently governed. Additive; the four-layer model is unchanged.</li>
+<li><strong>v1.3.0</strong> — Adopts <strong>FCIS-KIT-16 History-First Reconstruction</strong>, requiring an evidence-backed reconstruction of<br>
+the existing authority, proof, failure seam, reuse decision, and bounded acceptance before capability changes.<br>
+Additive; RFC 0001 architecture unchanged.</li>
+<li><strong>v1.1.0</strong> — Adopts the <strong>FCIS-AX Standard</strong> (accessibility as the machine-readable UI layer; every view, including custom-drawn views, exposes its content to the accessibility tree; agents and verification drive the AX tree, not pixels). Additive; RFC 0001 architecture unchanged.</li>
+<li><strong>v1.0.0</strong> — RFC 0001 establishes the FCIS four-layer architecture (<code class="notranslate">AGENTS.md</code> / <code class="notranslate">PLANS.md</code> / Skills / MCP), alongside the FCIS-AIC-Preflight and FCIS-VRT standards.</li>
 </ul>
 <hr>
 <h2 dir="auto">14. Summary</h2>
@@ -254,7 +318,6 @@ This mirrors successful separation patterns from compilers, operating systems, a
 <li>MCP defines capability</li>
 </ul>
 <p dir="auto">Adherence is mandatory for all fountain.coach Codex repositories.</p>
-
 <!-- END MIRROR: ORG_PROFILE_README -->
           </div>
           <footer class="paper__footer">
